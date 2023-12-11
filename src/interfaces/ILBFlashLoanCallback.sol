@@ -5,7 +5,7 @@ pragma solidity ^0.8.10;
 import {IERC20} from "openzeppelin/token/ERC20/IERC20.sol";
 
 /// @title Liquidity Book Flashloan Callback Interface
-/// @author Trader Joe
+/// @author  Ramen
 /// @notice Required interface to interact with LB flash loans
 interface ILBFlashLoanCallback {
     function LBFlashLoanCallback(

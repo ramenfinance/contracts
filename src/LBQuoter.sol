@@ -5,23 +5,23 @@ pragma solidity 0.8.10;
 import {IERC20} from "openzeppelin/token/ERC20/IERC20.sol";
 
 import {Constants} from "./libraries/Constants.sol";
-import {JoeLibrary} from "./libraries/JoeLibrary.sol";
+import {RamenLibrary} from "./libraries/RamenLibrary.sol";
 import {PriceHelper} from "./libraries/PriceHelper.sol";
 import {Uint256x256Math} from "./libraries/math/Uint256x256Math.sol";
 import {SafeCast} from "./libraries/math/SafeCast.sol";
 
-import {IJoeFactory} from "./interfaces/IJoeFactory.sol";
+import {IRamenFactory} from "./interfaces/IRamenFactory.sol";
 import {ILBFactory} from "./interfaces/ILBFactory.sol";
 import {ILBLegacyFactory} from "./interfaces/ILBLegacyFactory.sol";
 import {ILBLegacyRouter} from "./interfaces/ILBLegacyRouter.sol";
-import {IJoePair} from "./interfaces/IJoePair.sol";
+import {IRamenPair} from "./interfaces/IRamenPair.sol";
 import {ILBLegacyPair} from "./interfaces/ILBLegacyPair.sol";
 import {ILBPair} from "./interfaces/ILBPair.sol";
 import {ILBRouter} from "./interfaces/ILBRouter.sol";
 
 /**
  * @title Liquidity Book Quoter
- * @author Trader Joe
+ * @author  Ramen
  * @notice Helper contract to determine best path through multiple markets
  */
 contract LBQuoter {
@@ -219,18 +219,18 @@ contract LBQuoter {
 
             // Fetch swap for V1
             if (_factoryV1 != address(0)) {
-                address pair = IJoeFactory(_factoryV1).getPair(route[i], route[i + 1]);
+                address pair = IRamenFactory(_factoryV1).getPair(route[i], route[i + 1]);
 
                 if (pair != address(0) && quote.amounts[i] > 0) {
                     (uint256 reserveIn, uint256 reserveOut) = _getReserves(pair, route[i], route[i + 1]);
 
                     if (reserveIn > 0 && reserveOut > 0) {
-                        uint256 swapAmountOut = JoeLibrary.getAmountOut(quote.amounts[i], reserveIn, reserveOut);
+                        uint256 swapAmountOut = RamenLibrary.getAmountOut(quote.amounts[i], reserveIn, reserveOut);
 
                         if (swapAmountOut > quote.amounts[i + 1]) {
                             quote.amounts[i + 1] = swapAmountOut.safe128();
                             quote.pairs[i] = pair;
-                            quote.virtualAmountsWithoutSlippage[i + 1] = JoeLibrary.quote(
+                            quote.virtualAmountsWithoutSlippage[i + 1] = RamenLibrary.quote(
                                 quote.virtualAmountsWithoutSlippage[i] * 997, reserveIn * 1000, reserveOut
                             ).safe128();
 
@@ -349,18 +349,18 @@ contract LBQuoter {
 
             if (_factoryV1 != address(0)) {
                 // Fetch swap for V1
-                address pair = IJoeFactory(_factoryV1).getPair(route[i - 1], route[i]);
+                address pair = IRamenFactory(_factoryV1).getPair(route[i - 1], route[i]);
                 if (pair != address(0) && quote.amounts[i] > 0) {
                     (uint256 reserveIn, uint256 reserveOut) = _getReserves(pair, route[i - 1], route[i]);
 
                     if (reserveIn > 0 && reserveOut > quote.amounts[i]) {
-                        uint256 swapAmountIn = JoeLibrary.getAmountIn(quote.amounts[i], reserveIn, reserveOut);
+                        uint256 swapAmountIn = RamenLibrary.getAmountIn(quote.amounts[i], reserveIn, reserveOut);
 
                         if (swapAmountIn < quote.amounts[i - 1] || quote.amounts[i - 1] == 0) {
                             quote.amounts[i - 1] = swapAmountIn.safe128();
                             quote.pairs[i - 1] = pair;
                             quote.virtualAmountsWithoutSlippage[i - 1] = (
-                                JoeLibrary.quote(
+                                RamenLibrary.quote(
                                     quote.virtualAmountsWithoutSlippage[i] * 1000, reserveOut * 997, reserveIn
                                 ) + 1
                             ).safe128();
@@ -376,7 +376,7 @@ contract LBQuoter {
     }
 
     /**
-     * @dev Forked from JoeLibrary
+     * @dev Forked from RamenLibrary
      * @dev Doesn't rely on the init code hash of the factory
      * @param pair Address of the pair
      * @param tokenA Address of token A
@@ -389,8 +389,8 @@ contract LBQuoter {
         view
         returns (uint256 reserveA, uint256 reserveB)
     {
-        (address token0,) = JoeLibrary.sortTokens(tokenA, tokenB);
-        (uint256 reserve0, uint256 reserve1,) = IJoePair(pair).getReserves();
+        (address token0,) = RamenLibrary.sortTokens(tokenA, tokenB);
+        (uint256 reserve0, uint256 reserve1,) = IRamenPair(pair).getReserves();
         (reserveA, reserveB) = tokenA == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
     }
 

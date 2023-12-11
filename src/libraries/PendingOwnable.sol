@@ -6,7 +6,7 @@ import {IPendingOwnable} from "../interfaces/IPendingOwnable.sol";
 
 /**
  * @title Pending Ownable
- * @author Trader Joe
+ * @author  Ramen
  * @notice Contract module which provides a basic access control mechanism, where
  * there is an account (an owner) that can be granted exclusive access to
  * specific functions. The ownership of this contract is transferred using the

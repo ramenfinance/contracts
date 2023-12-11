@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Address Helper Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice This library contains functions to check if an address is a contract and
  * catch low level calls errors
  */

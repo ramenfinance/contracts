@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Safe Cast Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice This library contains functions to safely cast uint256 to different uint types.
  */
 library SafeCast {

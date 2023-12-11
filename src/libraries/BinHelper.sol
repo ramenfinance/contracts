@@ -15,7 +15,7 @@ import {TokenHelper} from "./TokenHelper.sol";
 
 /**
  * @title Liquidity Book Bin Helper Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice This library contains functions to help interaction with bins.
  */
 library BinHelper {

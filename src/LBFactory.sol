@@ -18,7 +18,7 @@ import {ILBPair} from "./interfaces/ILBPair.sol";
 
 /**
  * @title Liquidity Book Factory
- * @author Trader Joe
+ * @author  Ramen
  * @notice Contract used to deploy and register new LBPairs.
  * Enables setting fee parameters, flashloan fees and LBPair implementation.
  * Unless the `isOpen` is `true`, only the owner of the factory can create pairs.

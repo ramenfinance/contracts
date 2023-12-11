@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Encoded Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice Helper contract used for decoding bytes32 sample
  */
 library Encoded {

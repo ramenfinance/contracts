@@ -9,7 +9,7 @@ import {IPendingOwnable} from "./IPendingOwnable.sol";
 
 /**
  * @title Liquidity Book Factory Interface
- * @author Trader Joe
+ * @author  Ramen
  * @notice Required interface of LBFactory contract
  */
 interface ILBFactory is IPendingOwnable {

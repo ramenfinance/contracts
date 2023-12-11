@@ -6,7 +6,7 @@ import {PendingOwnable} from "src/libraries/PendingOwnable.sol";
 import {TokenHelper, IERC20} from "src/libraries/TokenHelper.sol";
 
 /// @title Faucet contract
-/// @author Trader Joe
+/// @author  Ramen
 /// @dev This contract should only be used for testnet
 /// @notice Create a faucet contract that create test tokens and allow user to request for tokens.
 /// This faucet will also provide NATIVE if native were sent to the contract (either during the construction or after).

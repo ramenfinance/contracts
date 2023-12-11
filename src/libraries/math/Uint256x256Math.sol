@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Uint256x256 Math Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice Helper contract used for full precision calculations
  */
 library Uint256x256Math {

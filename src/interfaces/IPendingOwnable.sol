@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Pending Ownable Interface
- * @author Trader Joe
+ * @author  Ramen
  * @notice Required interface of Pending Ownable contract used for LBFactory
  */
 interface IPendingOwnable {

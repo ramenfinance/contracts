@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Reentrancy Guard Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice This library contains functions to prevent reentrant calls to a function
  */
 abstract contract ReentrancyGuard {

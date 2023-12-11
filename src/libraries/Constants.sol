@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 /**
  * @title Liquidity Book Constants Library
- * @author Trader Joe
+ * @author  Ramen
  * @notice Set of constants for Liquidity Book contracts
  */
 library Constants {

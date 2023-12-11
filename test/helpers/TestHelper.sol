@@ -9,7 +9,7 @@ import "src/LBPair.sol";
 import "src/LBRouter.sol";
 import "src/LBQuoter.sol";
 import "src/interfaces/ILBRouter.sol";
-import "src/interfaces/IJoeRouter02.sol";
+import "src/interfaces/IRamenRouter02.sol";
 import "src/interfaces/ILBLegacyRouter.sol";
 import "src/interfaces/ILBLegacyFactory.sol";
 import "src/LBToken.sol";
@@ -80,8 +80,8 @@ abstract contract TestHelper is Test {
     LBPair internal pairImplementation;
 
     // Forked contracts
-    IJoeRouter02 internal routerV1;
-    IJoeFactory internal factoryV1;
+    IRamenRouter02 internal routerV1;
+    IRamenFactory internal factoryV1;
     ILBLegacyRouter internal legacyRouterV2;
     ILBLegacyFactory internal legacyFactoryV2;
 
@@ -112,10 +112,10 @@ abstract contract TestHelper is Test {
         vm.label(address(taxToken), "taxToken");
 
         // Get forked contracts
-        routerV1 = IJoeRouter02(AvalancheAddresses.JOE_V1_ROUTER);
-        factoryV1 = IJoeFactory(AvalancheAddresses.JOE_V1_FACTORY);
-        legacyRouterV2 = ILBLegacyRouter(AvalancheAddresses.JOE_V2_ROUTER);
-        legacyFactoryV2 = ILBLegacyFactory(AvalancheAddresses.JOE_V2_FACTORY);
+        routerV1 = IRamenRouter02(AvalancheAddresses.Ramen_V1_ROUTER);
+        factoryV1 = IRamenFactory(AvalancheAddresses.Ramen_V1_FACTORY);
+        legacyRouterV2 = ILBLegacyRouter(AvalancheAddresses.Ramen_V2_ROUTER);
+        legacyFactoryV2 = ILBLegacyFactory(AvalancheAddresses.Ramen_V2_FACTORY);
 
         // Create factory
         factory = new LBFactory(DEV, DEFAULT_FLASHLOAN_FEE);

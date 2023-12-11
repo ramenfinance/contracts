@@ -8,36 +8,35 @@ import {BinHelper} from "./libraries/BinHelper.sol";
 import {Constants} from "./libraries/Constants.sol";
 import {Encoded} from "./libraries/math/Encoded.sol";
 import {FeeHelper} from "./libraries/FeeHelper.sol";
-import {JoeLibrary} from "./libraries/JoeLibrary.sol";
+import {RamenLibrary} from "./libraries/RamenLibrary.sol";
 import {LiquidityConfigurations} from "./libraries/math/LiquidityConfigurations.sol";
 import {PackedUint128Math} from "./libraries/math/PackedUint128Math.sol";
 import {TokenHelper} from "./libraries/TokenHelper.sol";
 import {Uint256x256Math} from "./libraries/math/Uint256x256Math.sol";
 
-import {IJoePair} from "./interfaces/IJoePair.sol";
+import {IRamenPair} from "./interfaces/IRamenPair.sol";
 import {ILBPair} from "./interfaces/ILBPair.sol";
 import {ILBLegacyPair} from "./interfaces/ILBLegacyPair.sol";
 import {ILBToken} from "./interfaces/ILBToken.sol";
 import {ILBRouter} from "./interfaces/ILBRouter.sol";
 import {ILBLegacyRouter} from "./interfaces/ILBLegacyRouter.sol";
-import {IJoeFactory} from "./interfaces/IJoeFactory.sol";
+import {IRamenFactory} from "./interfaces/IRamenFactory.sol";
 import {ILBLegacyFactory} from "./interfaces/ILBLegacyFactory.sol";
 import {ILBFactory} from "./interfaces/ILBFactory.sol";
 import {IWNATIVE} from "./interfaces/IWNATIVE.sol";
 
 /**
  * @title Liquidity Book Router
- * @author Trader Joe
- * @notice Main contract to interact with to swap and manage liquidity on Joe V2 exchange.
+ * @notice Main contract to interact with to swap and manage liquidity on Ramen V2 exchange.
  */
 contract LBRouter is ILBRouter {
     using TokenHelper for IERC20;
     using TokenHelper for IWNATIVE;
-    using JoeLibrary for uint256;
+    using RamenLibrary for uint256;
     using PackedUint128Math for bytes32;
 
     ILBFactory private immutable _factory;
-    IJoeFactory private immutable _factoryV1;
+    IRamenFactory private immutable _factoryV1;
     ILBLegacyFactory private immutable _legacyFactory;
     ILBLegacyRouter private immutable _legacyRouter;
     IWNATIVE private immutable _wnative;
@@ -62,15 +61,15 @@ contract LBRouter is ILBRouter {
 
     /**
      * @notice Constructor
-     * @param factory Address of Joe V2.1 factory
-     * @param factoryV1 Address of Joe V1 factory
-     * @param legacyFactory Address of Joe V2 factory
-     * @param legacyRouter Address of Joe V2 router
+     * @param factory Address of Ramen V2.1 factory
+     * @param factoryV1 Address of Ramen V1 factory
+     * @param legacyFactory Address of Ramen V2 factory
+     * @param legacyRouter Address of Ramen V2 router
      * @param wnative Address of WNATIVE
      */
     constructor(
         ILBFactory factory,
-        IJoeFactory factoryV1,
+        IRamenFactory factoryV1,
         ILBLegacyFactory legacyFactory,
         ILBLegacyRouter legacyRouter,
         IWNATIVE wnative
@@ -109,7 +108,7 @@ contract LBRouter is ILBRouter {
      * View function to get the factory V1 address
      * @return factoryV1 The address of the factory V1
      */
-    function getV1Factory() external view override returns (IJoeFactory factoryV1) {
+    function getV1Factory() external view override returns (IRamenFactory factoryV1) {
         return _factoryV1;
     }
 
@@ -780,7 +779,7 @@ contract LBRouter is ILBRouter {
             address pair = pairs[i - 1];
 
             if (version == Version.V1) {
-                (uint256 reserveIn, uint256 reserveOut,) = IJoePair(pair).getReserves();
+                (uint256 reserveIn, uint256 reserveOut,) = IRamenPair(pair).getReserves();
                 if (token > tokenPath[i]) {
                     (reserveIn, reserveOut) = (reserveOut, reserveIn);
                 }
@@ -864,14 +863,14 @@ contract LBRouter is ILBRouter {
                 recipient = i + 1 == pairs.length ? to : pairs[i + 1];
 
                 if (version == Version.V1) {
-                    (uint256 reserve0, uint256 reserve1,) = IJoePair(pair).getReserves();
+                    (uint256 reserve0, uint256 reserve1,) = IRamenPair(pair).getReserves();
 
                     if (token < tokenNext) {
                         amountOut = amountOut.getAmountOut(reserve0, reserve1);
-                        IJoePair(pair).swap(0, amountOut, recipient, "");
+                        IRamenPair(pair).swap(0, amountOut, recipient, "");
                     } else {
                         amountOut = amountOut.getAmountOut(reserve1, reserve0);
-                        IJoePair(pair).swap(amountOut, 0, recipient, "");
+                        IRamenPair(pair).swap(amountOut, 0, recipient, "");
                     }
                 } else if (version == Version.V2) {
                     bool swapForY = tokenNext == ILBLegacyPair(pair).tokenY();
@@ -928,9 +927,9 @@ contract LBRouter is ILBRouter {
                 if (version == Version.V1) {
                     amountOut = amountsIn[i + 1];
                     if (token < tokenNext) {
-                        IJoePair(pair).swap(0, amountOut, recipient, "");
+                        IRamenPair(pair).swap(0, amountOut, recipient, "");
                     } else {
-                        IJoePair(pair).swap(amountOut, 0, recipient, "");
+                        IRamenPair(pair).swap(amountOut, 0, recipient, "");
                     }
                 } else if (version == Version.V2) {
                     bool swapForY = tokenNext == ILBLegacyPair(pair).tokenY();
@@ -982,17 +981,17 @@ contract LBRouter is ILBRouter {
                 recipient = i + 1 == pairs.length ? to : pairs[i + 1];
 
                 if (version == Version.V1) {
-                    (uint256 _reserve0, uint256 _reserve1,) = IJoePair(pair).getReserves();
+                    (uint256 _reserve0, uint256 _reserve1,) = IRamenPair(pair).getReserves();
                     if (token < tokenNext) {
                         uint256 amountIn = token.balanceOf(pair) - _reserve0;
                         uint256 amountOut = amountIn.getAmountOut(_reserve0, _reserve1);
 
-                        IJoePair(pair).swap(0, amountOut, recipient, "");
+                        IRamenPair(pair).swap(0, amountOut, recipient, "");
                     } else {
                         uint256 amountIn = token.balanceOf(pair) - _reserve1;
                         uint256 amountOut = amountIn.getAmountOut(_reserve1, _reserve0);
 
-                        IJoePair(pair).swap(amountOut, 0, recipient, "");
+                        IRamenPair(pair).swap(amountOut, 0, recipient, "");
                     }
                 } else if (version == Version.V2) {
                     ILBLegacyPair(pair).swap(tokenNext == ILBLegacyPair(pair).tokenY(), recipient);

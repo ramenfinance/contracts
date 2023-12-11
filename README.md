@@ -1,4 +1,4 @@
-# [Joe V2: Liquidity Book](https://github.com/traderjoe-xyz/joe-v2)
+# [Ramen V2: Liquidity Book](https://github.com/ramenfinance/contracts)
 
 This repository contains the Liquidity Book contracts, as well as tests and deploy scripts.
 
@@ -12,7 +12,7 @@ This repository contains the Liquidity Book contracts, as well as tests and depl
 
 - The [LBQuoter](./src/LBQuoter.sol) is a contract that is used to return the best route of all those given. This should be used before a swap to get the best return on a swap.
 
-For more information, go to the [documentation](https://docs.traderjoexyz.com/) and the [whitepaper](https://github.com/traderjoe-xyz/LB-Whitepaper/blob/main/Joe%20v2%20Liquidity%20Book%20Whitepaper.pdf).
+For more information, go to the [documentation](https://docs.ramenfinance.com/) and the [whitepaper](https://github.com/ramenfinance/LB-Whitepaper/blob/main/Ramen%20v2%20Liquidity%20Book%20Whitepaper.pdf).
 
 ## Install foundry
 
@@ -57,7 +57,7 @@ To install dependencies, run the following to install dependencies:
 forge install
 ```
 
-___
+---
 
 ## Tests
 

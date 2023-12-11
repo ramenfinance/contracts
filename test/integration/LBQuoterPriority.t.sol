@@ -21,7 +21,7 @@ contract LiquidityBinQuoterPriorityTest is Test {
         vm.createSelectFork(vm.rpcUrl("avalanche"), 33313442);
 
         newQuoter =
-        new LBQuoter(AvalancheAddresses.JOE_V1_FACTORY, AvalancheAddresses.JOE_V2_FACTORY, factory, AvalancheAddresses.JOE_V2_ROUTER, router);
+        new LBQuoter(AvalancheAddresses.Ramen_V1_FACTORY, AvalancheAddresses.Ramen_V2_FACTORY, factory, AvalancheAddresses.Ramen_V2_ROUTER, router);
     }
 
     function test_QuoteFromAmountIn() public {

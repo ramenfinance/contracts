@@ -7,7 +7,7 @@ import {IERC20} from "openzeppelin/token/ERC20/IERC20.sol";
 import {ILBLegacyToken} from "./ILBLegacyToken.sol";
 
 /// @title Liquidity Book Pair V2 Interface
-/// @author Trader Joe
+/// @author  Ramen
 /// @notice Required interface of LBPair contract
 interface ILBLegacyPair is ILBLegacyToken {
     /// @dev Structure to store the protocol fees:

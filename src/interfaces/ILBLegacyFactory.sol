@@ -8,7 +8,7 @@ import {ILBLegacyPair} from "./ILBLegacyPair.sol";
 import {IPendingOwnable} from "./IPendingOwnable.sol";
 
 /// @title Liquidity Book Factory Interface
-/// @author Trader Joe
+/// @author  Ramen
 /// @notice Required interface of LBFactory contract
 interface ILBLegacyFactory is IPendingOwnable {
     /// @dev Structure to store the LBPair information, such as:
